@@ -1,14 +1,14 @@
 const md5 = require("md5")
 const jwt = require(`jsonwebtoken`)
 const { validationResult } = require(`express-validator`)
-const akses = require("../akses")
+const access = require("../access")
 let walletModel = require("../models/index").wallet
 let topUpModel = require("../models/index").topup
 let paymentModel = require("../models/index").transaction
 let orderModel = require("../models/index").order
 
 exports.showBalance = async (request, response) => {
-    let granted = await akses.usersOwners(request);
+    let granted = await access.usersOwners(request);
     if (!granted.status) {
         return response.status(403).json(granted.message);
     }
@@ -48,7 +48,7 @@ exports.showBalance = async (request, response) => {
 }
 
 exports.topUp = async (request, response) => {
-    let granted = await akses.users(request);
+    let granted = await access.users(request);
     if (!granted.status) {
         return response.status(403).json(granted.message);
     }
@@ -112,7 +112,7 @@ exports.topUp = async (request, response) => {
 }
 
 exports.payment = async (request, response) => {
-    let granted = await akses.users(request);
+    let granted = await access.users(request);
     if (!granted.status) {
         return response.status(403).json(granted.message);
     }

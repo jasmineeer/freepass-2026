@@ -1,7 +1,7 @@
 const md5 = require("md5")
 const jwt = require(`jsonwebtoken`)
 const { validationResult } = require(`express-validator`)
-const akses = require("../akses")
+const access = require("../access")
 let userModel = require("../models/index").user 
 let walletModel = require("../models/wallet").wallet
 let canteenModel = require("../models/canteen").canteen
@@ -68,7 +68,7 @@ exports.addUsers = (request, response) => {
 }
 
 exports.addOwners = async (request, response) => {
-    let granted = await akses.admin(request);
+    let granted = await access.admin(request);
     if (!granted.status) {
         return response.status(403).json(granted.message);
     }
@@ -111,7 +111,7 @@ exports.addOwners = async (request, response) => {
 }
 
 exports.updateUsers = async (request, response) => {
-    let granted = await akses.users(request);
+    let granted = await access.users(request);
     if (!granted.status) {
         return response.status(403).json(granted.message);
     }
@@ -147,7 +147,7 @@ exports.updateUsers = async (request, response) => {
 }
 
 exports.updateOwners = async (request, response) => {
-    let granted = await akses.admin(request);
+    let granted = await access.admin(request);
     if (!granted.status) {
         return response.status(403).json(granted.message);
     }
@@ -183,7 +183,7 @@ exports.updateOwners = async (request, response) => {
 }
 
 exports.deleteUsers = async (request, response) => {
-    let granted = await akses.adminUsers(request);
+    let granted = await access.adminUsers(request);
     if (!granted.status) {
         return response.status(403).json(granted.message);
     }
@@ -214,7 +214,7 @@ exports.deleteUsers = async (request, response) => {
 }
 
 exports.deleteOwners = async (request, response) => {
-    let granted = await akses.admin(request);
+    let granted = await access.admin(request);
     if (!granted.status) {
         return response.status(403).json(granted.message);
     }

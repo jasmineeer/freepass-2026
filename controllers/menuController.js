@@ -1,9 +1,9 @@
-const akses = require("../akses")
+const access = require("../access")
 let menuModel = require("../models/index").menu 
 let canteenModel = require("../models/index").canteen 
 
 exports.addMenu = async (request, response) => {
-    let granted = await akses.owners(request);
+    let granted = await access.owners(request);
     if (!granted.status) {
         return response.status(403).json(granted.message);
     }
@@ -48,7 +48,7 @@ exports.addMenu = async (request, response) => {
 }
 
 exports.updateMenu = async (request, response) => {
-    let granted = await akses.owners(request);
+    let granted = await access.owners(request);
     if (!granted.status) {
         return response.status(403).json(granted.message);
     }
@@ -84,7 +84,7 @@ exports.updateMenu = async (request, response) => {
 }
 
 exports.deleteMenu = async (request, response) => {
-    let granted = await akses.owners(request);
+    let granted = await access.owners(request);
     if (!granted.status) {
         return response.status(403).json(granted.message);
     }

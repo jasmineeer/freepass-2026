@@ -1,6 +1,6 @@
 const jwt = require(`jsonwebtoken`)
 const { validationResult } = require(`express-validator`)
-const akses = require("../akses")
+const access = require("../access")
 let canteenModel = require("../models/index").canteen 
 let userModel = require("../models/index").user 
 let menuModel = require("../models/index").menu 
@@ -128,7 +128,7 @@ exports.getOrders = (request, response) => {
 }
 
 exports.addOrder = async (request, response) => {
-    let granted = await akses.users(request);
+    let granted = await access.users(request);
     if (!granted.status) {
         return response.status(403).json(granted.message);
     }
@@ -209,7 +209,7 @@ exports.addOrder = async (request, response) => {
 }
 
 exports.updateStatus = async (request, response) => {
-    let granted = await akses.owners(request);
+    let granted = await access.owners(request);
     if (!granted.status) {
         return response.status(403).json(granted.message);
     }
