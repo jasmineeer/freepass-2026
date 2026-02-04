@@ -13,5 +13,6 @@ app.put("/owners/:id_user", [authorization.authorization], userController.update
 app.delete("/users/:id_user", [authorization.authorization], userController.deleteUsers)
 app.delete("/owners/:id_user", [authorization.authorization], userController.deleteOwners)
 app.post("/login", userController.authentication)
+app.get("/logout", userController.authentication)
 
 module.exports = app

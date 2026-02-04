@@ -278,3 +278,10 @@ exports.authentication = async (request, response) => {
         })
     }
 }
+
+exports.logout = (request, response) => {
+    return response.json({
+        status: true,
+        message: "Logout successful"
+    })
+}
