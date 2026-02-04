@@ -14,9 +14,9 @@ exports.showBalance = async (request, response) => {
     }
 
     let id = request.dataUser.id_user 
-    let pass = request.body.password
+    let pass = md5(request.body.password)
 
-    wallet.findOne({
+    walletModel.findOne({
         where: { 
             id_user: id 
         }
@@ -53,7 +53,7 @@ exports.topUp = async (request, response) => {
         return response.status(403).json(granted.message);
     }
 
-    let id= request.dataUser.id_user
+    let id = request.dataUser.id_user
     let amount = Number(request.body.amount)
     let pass = md5(request.body.password)
 
