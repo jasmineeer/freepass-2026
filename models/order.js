@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       // key: id_canteen
       // parent: canteen, child: order
       // tipe: 1 order hanya mencatat 1 canteen (one to one)
-      this.belongsTo(models.id_canteen, {
+      this.belongsTo(models.canteen, {
         foreignKey: "id_canteen",
         as: "canteen"
       })
