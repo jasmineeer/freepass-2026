@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    id_customer: DataTypes.INTEGER,
+    id_user: DataTypes.INTEGER,
     id_canteen: DataTypes.INTEGER,
     order_status: {
       type: DataTypes.ENUM('Waiting', 'Cooking', 'Ready', 'Completed'),

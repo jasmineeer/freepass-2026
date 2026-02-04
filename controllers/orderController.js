@@ -145,10 +145,10 @@ exports.addOrder = async (request, response) => {
             where: { 
                 id_menu: idMenu 
             } 
-        });
+        })
 
         if (!menu) {
-            return response.json({ message: `Menu ${menu.menu_name} not found` });
+            return response.json({ message: `Menu ${idMenu} not found` });
         }
 
         if (menu.stock < qty) {
@@ -160,7 +160,7 @@ exports.addOrder = async (request, response) => {
     }
 
     let dataOrder = {
-        id_customer: request.dataUser.id_user, 
+        id_user: request.dataUser.id_user, 
         id_canteen: id,
         order_status: "Waiting", 
         total: subtotal,
@@ -196,7 +196,7 @@ exports.addOrder = async (request, response) => {
         .then(result => {
             return response.json({
                 status: true,
-                message: `Order successfull`,
+                message: `Order successful`,
                 data: result
             })
         })

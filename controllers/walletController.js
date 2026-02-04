@@ -118,12 +118,12 @@ exports.payment = async (request, response) => {
     }
 
     let id = request.dataUser.id_user
-    let pass = request.body.password 
+    let pass = md5(request.body.password) 
 
     orderModel.findOne({
         where: {
             id_user: id,
-            payment: 'Unpaid'
+            payment_status: 'Unpaid'
         }
     })
 
@@ -173,8 +173,8 @@ exports.payment = async (request, response) => {
 
             .then(() => {
                 return orderModel.update({
-                    status: 'Cooking',
-                    payment: 'Paid'
+                    order_status: 'Cooking',
+                    payment_status: 'Paid'
                 }, {
                     where: {
                         id_order: result.id_order
@@ -183,7 +183,7 @@ exports.payment = async (request, response) => {
             })
 
             .then(() => {
-                return paymentModel.update({
+                return paymentModel.create({
                     id_order: result.id_order,
                     id_wallet: wallet.id_wallet,
                     transaction_date: new Date()
