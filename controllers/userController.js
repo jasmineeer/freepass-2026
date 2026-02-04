@@ -3,8 +3,8 @@ const jwt = require(`jsonwebtoken`)
 const { validationResult } = require(`express-validator`)
 const access = require("../access")
 let userModel = require("../models/index").user 
-let walletModel = require("../models/wallet").wallet
-let canteenModel = require("../models/canteen").canteen
+let walletModel = require("../models/index").wallet
+let canteenModel = require("../models/index").canteen
 
 exports.getUser = (request, response) => {
     userModel.findAll()
@@ -134,7 +134,6 @@ exports.updateUsers = async (request, response) => {
 
     .then(result => {
         return response.json({
-            data: result,
             message: `Users successfully updated`
         })
     })
@@ -170,7 +169,6 @@ exports.updateOwners = async (request, response) => {
 
     .then(result => {
         return response.json({
-            data: result,
             message: `Owners successfully updated`
         })
     })
