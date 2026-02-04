@@ -10,19 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // relasi detail_order -> order (child -> parent)
-      // key: id_order
-      // parent: order, child: detail_order
-      // tipe: 1 detail_order hanya mencatat 1 order (one to one)
       this.belongsTo(models.order, {
         foreignKey: "id_order",
         as: "order"
       })
 
-      // relasi detail_order -> menu (child -> parent)
-      // key: id_menu
-      // parent: menu, child: detail_order
-      // tipe: 1 detail_order hanya mencatat 1 menu (one to one)
       this.belongsTo(models.menu, {
         foreignKey: "id_menu",
         as: "menu"

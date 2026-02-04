@@ -10,19 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // relasi user -> order (parent -> child)
-      // key: id_user
-      // parent: user, child: order
-      // tipe: 1 user bisa tercatat di banyak order (one to many)
       this.hasMany(models.order, {
         foreignKey: "id_user",
         as: "order"
       })
 
-      // relasi user -> wallet (parent -> child)
-      // key: id_user
-      // parent: user, child: wallet
-      // tipe: 1 user hanya memiliki 1 wallet (one to one)
       this.hasOne(models.wallet, {
         foreignKey: "id_user",
         as: "wallet"
