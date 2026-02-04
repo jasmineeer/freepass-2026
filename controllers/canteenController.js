@@ -12,7 +12,7 @@ exports.getCanteen = async (request, response) => {
         include: [
             {
                 model: userModel,
-                as: "owner",
+                as: "user",
                 attributes: [
                     'id_user',
                     'user_name'
@@ -45,7 +45,7 @@ exports.getCanteenById = (request, response) => {
         include: [
             {
                 model: userModel,
-                as: "owner",
+                as: "user",
                 attributes: [
                     'id_user', 
                     'user_name'
@@ -66,7 +66,7 @@ exports.getCanteenById = (request, response) => {
                         include: [
                             {
                                 model: userModel,
-                                as: "customer",
+                                as: "user",
                                 attributes: [
                                     'id_user', 
                                     'user_name'
@@ -137,7 +137,7 @@ exports.getFeedback = async (request, response) => {
                     ]
                 }, {
                     model: userModel,
-                    as: "customer",
+                    as: "user",
                     attributes: [
                         'id_user',
                         'user_name'
@@ -178,7 +178,7 @@ exports.addFeedback = async (request, response) => {
     orderModel.findOne({
         where: { 
             id_order: idOrder, 
-            id_customer: id 
+            id_user: id 
         }
     })
 
