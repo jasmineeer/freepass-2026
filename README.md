@@ -163,7 +163,7 @@ cd freepass-2026
 ### 2. Configure Environment
 > Create .env file in the root directory:
 ```bash
-PORT=8000
+PORT=8080
 DB_HOST=mysql_db
 DB_USER=root
 DB_PASS=root
