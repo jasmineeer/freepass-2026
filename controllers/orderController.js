@@ -31,7 +31,7 @@ exports.getOrders = (request, response) => {
                 },
                 {
                     model: detailModel,
-                    as: "details",
+                    as: "detail_order",
                     include: [{ 
                         model: menuModel, 
                         as: "menu", 
@@ -85,14 +85,14 @@ exports.getOrders = (request, response) => {
                 include: [
                     {
                         model: userModel,
-                        as: "customer",
+                        as: "user",
                         attributes: [
                             'user_name'
                         ]
                     },
                     {
                         model: detailModel,
-                        as: "details",
+                        as: "detail_order",
                         include: [{ 
                             model: menuModel, 
                             as: "menu", 
@@ -171,10 +171,10 @@ exports.addOrder = async (request, response) => {
     orderModel.create(dataOrder)
 
         .then(result => {
-            let id = result.id_order;
+            let idOrder = result.id_order;
 
             for (let i = 0; i < detail.length; i++) {
-                detail[i].id_order = id;
+                detail[i].id_order = idOrder;
             }
 
             return detailModel.bulkCreate(detail)
@@ -215,11 +215,13 @@ exports.updateStatus = async (request, response) => {
     }
 
     let id = request.params.id_order;
-    let newStat = request.body.status;
+    let newStat = request.body.order_status;
     let idOwner = request.dataUser.id_user;
 
     orderModel.findOne({
-        where: { id_order: id },
+        where: { 
+            id_order: id 
+        },
         include: [{
             model: canteenModel,
             as: "canteen",
@@ -234,7 +236,7 @@ exports.updateStatus = async (request, response) => {
             return response.json({ message: "Order not found" });
         }
 
-        if (order.payment_status === "Unpaid" && newStat !== "Cancelled") {
+        if (order.payment_status === "Unpaid") {
             return response.json({ 
                 message: "Cannot update order status. Customer must pay first!" 
             });
@@ -242,7 +244,7 @@ exports.updateStatus = async (request, response) => {
 
         return orderModel.update(
             { 
-                status: newStat 
+                order_status: newStat 
             },{ 
                 where: { 
                     id_order: id
@@ -254,7 +256,7 @@ exports.updateStatus = async (request, response) => {
     .then(result => {
         return response.json({
             status: true,
-            message: `Order #${idOrder} is '${newStat}'`
+            message: `Order #${id} is '${newStat}'`
         });
     })
 

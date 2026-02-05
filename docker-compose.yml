@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql_db
+    environment:
+      - DB_HOST=mysql_db
+      - DB_USER=root
+      - DB_PASS=root
+      - DB_NAME=freepass
+
+  mysql_db:
+    image: mysql:8.0
+    restart: always
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: freepass
+    ports:
+      - "3307:3306"
+
+volumes:
+  mysql_data:

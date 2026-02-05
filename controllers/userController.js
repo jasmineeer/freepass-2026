@@ -1,5 +1,6 @@
 const md5 = require("md5")
 const jwt = require(`jsonwebtoken`)
+const bcrypt = require('bcrypt')
 const { validationResult } = require(`express-validator`)
 const access = require("../access")
 let userModel = require("../models/index").user 
@@ -259,18 +260,24 @@ exports.authentication = async (request, response) => {
     }
     
     let result = await userModel.findOne({
-        where: dataUser 
+        where: {
+            username: request.body.username 
+        }
     })
 
     if (result) {
-        let payload = JSON.stringify(result)
-        let secretKey = `BCC Canteen`
-        let token = jwt.sign(payload, secretKey)
-        return response.json({
-            logged: true,
-            token: token, 
-            user: result
-        })
+        let passValid = await bcrypt.compare(request.body.password, result.password)
+        
+        if(passValid) {  
+            let payload = JSON.stringify(result)
+            let secretKey = `BCC Canteen`
+            let token = jwt.sign(payload, secretKey)
+            return response.json({
+                logged: true,
+                token: token, 
+                user: result
+            })
+        }
     } else {
         return response.json({
             logged: false,
