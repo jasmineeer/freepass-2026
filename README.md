@@ -154,7 +154,37 @@ The implementation of this project MUST be in the form of a REST, gRPC, or Graph
 
 ## **🧪** API Installation
 
-> Write how to run your service in a local or development environment here. If you use Docker to serve your DBMS or your server, you will receive bonus points for your submission.
+> Make sure to install Docker Desktop (https://www.docker.com/products/docker-desktop/)
+### 1. Clone This Repository
+```bash
+git clone https://github.com/jasmineeer/freepass-2026.git
+cd freepass-2026
+```
+### 2. Configure Environment
+> Create .env file in the root directory:
+```bash
+PORT=8080
+DB_HOST=mysql_db
+DB_USER=root
+DB_PASS=root
+DB_NAME=freepass
+DB_DIALECT=mysql_db
+SECRET_KEY=BCC Canteen
+```
+### 3. Build and Run via Docker Desktop
+```bash
+docker-compose up --build
+```
+### 4. Setup Database
+> Open a new terminal window and keep the previous one running
+```bash
+docker-compose exec app npx sequelize-cli db:migrate
+docker-compose exec app npx sequelize-cli db:seed:all
+```
+### 5. Run Application
+> Username: Admin1@bccanteen
+> 
+> Password: admin123
 
 ## **📞** Contact
 
