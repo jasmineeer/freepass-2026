@@ -38,14 +38,15 @@ exports.findUser = async (request, response) => {
     return response.json(data) 
 }
 
-exports.addUsers = (request, response) => {
+exports.addUsers = async (request, response) => {
+    let pass = await bcrypt.hash(request.body.password, 10)
     let newUsers = {
         user_name: request.body.user_name,
         address: request.body.address,
         number: request.body.number,
         role: 'Users',
         username: request.body.username,
-        password: md5(request.body.password)
+        password: pass
     }
 
     userModel.create(newUsers)
@@ -74,13 +75,15 @@ exports.addOwners = async (request, response) => {
         return response.status(403).json(granted.message);
     }
 
+    let pass = await bcrypt.hash(request.body.password, 10)
+
     let newOwners = {
         user_name: request.body.user_name,
         address: request.body.address,
         number: request.body.number,
         role: 'Owners',
         username: request.body.username,
-        password: md5(request.body.password)
+        password: pass
     }
 
     let name = request.body.canteen_name
@@ -117,6 +120,8 @@ exports.updateUsers = async (request, response) => {
         return response.status(403).json(granted.message);
     }
 
+    let pass = await bcrypt.hash(request.body.password, 10)
+
     let id = request.params.id_user
     let dataUsers = {
         user_name: request.body.user_name,
@@ -124,7 +129,7 @@ exports.updateUsers = async (request, response) => {
         number: request.body.number,
         role: 'Users',
         username: request.body.username,
-        password: md5(request.body.password)
+        password: pass
     }
 
     userModel.update(dataUsers, {
@@ -152,6 +157,8 @@ exports.updateOwners = async (request, response) => {
         return response.status(403).json(granted.message);
     }
 
+    let pass = await bcrypt.hash(request.body.password, 10)
+
     let id = request.params.id_user
     let dataOwners = {
         user_name: request.body.user_name,
@@ -159,7 +166,7 @@ exports.updateOwners = async (request, response) => {
         number: request.body.number,
         role: 'Owners',
         username: request.body.username,
-        password: md5(request.body.password)
+        password: pass
     }
 
     userModel.update(dataOwners, {
@@ -254,16 +261,12 @@ exports.deleteOwners = async (request, response) => {
 }
 
 exports.authentication = async (request, response) => {
-    let dataUser = {
-        username: request.body.username,
-        password: md5(request.body.password)
-    }
-    
     let result = await userModel.findOne({
         where: {
             username: request.body.username 
         }
     })
+    
 
     if (result) {
         let passValid = await bcrypt.compare(request.body.password, result.password)

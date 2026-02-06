@@ -12,7 +12,7 @@ exports.getCanteen = async (request, response) => {
         include: [
             {
                 model: userModel,
-                as: "user",
+                as: "owner",
                 attributes: [
                     'id_user',
                     'user_name'
