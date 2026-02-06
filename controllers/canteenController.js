@@ -45,7 +45,7 @@ exports.getCanteenById = (request, response) => {
         include: [
             {
                 model: userModel,
-                as: "user",
+                as: "owner",
                 attributes: [
                     'id_user', 
                     'user_name'
@@ -66,7 +66,7 @@ exports.getCanteenById = (request, response) => {
                         include: [
                             {
                                 model: userModel,
-                                as: "user",
+                                as: "owner",
                                 attributes: [
                                     'id_user', 
                                     'user_name'
@@ -137,7 +137,7 @@ exports.getFeedback = async (request, response) => {
                     ]
                 }, {
                     model: userModel,
-                    as: "user",
+                    as: "owner",
                     attributes: [
                         'id_user',
                         'user_name'
